@@ -1,20 +1,25 @@
-require('dotenv').config();
-
 const request = require('supertest');
 const app = require('../lib/app');
-const connect = require('../lib/utils/connect');
-const mongoose = require('mongoose');
+const { getMeme, getMemes } = require('../db/data-helpers');
 
-describe('app routes', () => {
-  beforeAll(() => {
-    connect();
-  });
+describe('meme routes', () => {
+  it('creates a meme', () => {
 
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-
-  afterAll(() => {
-    return mongoose.connection.close();
+    return request(app)
+      .post('/api/v1/meme')
+      .send({
+        top: 'I don\'t always code...',
+        url: 'http://www.memeguy.com/image.jpg',
+        bottom: '...but when I do... I have a dog named spot.'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          top: 'I don\'t always code...',
+          url: 'http://www.memeguy.com/image.jpg',
+          bottom: '...but when I do... I have a dog named spot.',
+          __v: 0
+        });
+      });
   });
 });
