@@ -22,4 +22,20 @@ describe('meme routes', () => {
         });
       });
   });
+
+  it('gets all the memes', async() => {
+
+    const memes = await getMemes();
+
+    return request(app)
+      .get('/api/v1/memes')
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          ...memes,
+          __v: 0
+        });
+      });
+  });
+
 });
