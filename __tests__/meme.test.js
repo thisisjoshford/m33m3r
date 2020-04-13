@@ -52,7 +52,7 @@ describe('meme routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           ...meme,
-          bottom: 'my dog weighs 20lbs'
+          bottom: 'my dog weighs 20lbs...'
         });
       });
   });
