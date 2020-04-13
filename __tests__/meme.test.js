@@ -26,15 +26,12 @@ describe('meme routes', () => {
   it('gets all the memes', async() => {
 
     const memes = await getMemes();
+    console.log(memes);
 
     return request(app)
       .get('/api/v1/memes')
       .then(res => {
-        expect(res.body).toEqual({
-          _id: expect.any(String),
-          ...memes,
-          __v: 0
-        });
+        expect(res.body).toEqual(memes);
       });
   });
 
